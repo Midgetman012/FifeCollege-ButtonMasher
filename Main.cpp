@@ -1,6 +1,7 @@
 // Included Libraries
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <string>
 
 
 // entry point for the program
@@ -42,13 +43,22 @@ int main()
 
 	sf::Text authorText;
 	authorText.setFont(gameFont);
-	authorText.setString("By Ryan Mowatt!");
+	authorText.setString("By Rob Boss!");
 	authorText.setCharacterSize(100);
 	authorText.setFillColor(sf::Color::Red);
 	authorText.setStyle(sf::Text::Bold | sf::Text::Italic);
 	authorText.setPosition(gameWindow.getSize().x / 2 - authorText.getLocalBounds().width / 2, 100);
 
+	// Score
+	int score = 0;
 
+	// score text
+	sf::Text scoreText;
+	scoreText.setFont(gameFont);
+	scoreText.setString("Score : " + std::to_string(score));
+	scoreText.setCharacterSize(16);
+	scoreText.setFillColor(sf::Color::Red);
+	scoreText.setPosition(30, 30);
 
 	//Centre the sprite on screen
 
@@ -86,6 +96,7 @@ int main()
 		gameWindow.draw(buttonSprite);
 		gameWindow.draw(titleText);
 		gameWindow.draw(authorText);
+		gameWindow.draw(scoreText);
 
 		//Display the window contents on the screen
 		gameWindow.display();
