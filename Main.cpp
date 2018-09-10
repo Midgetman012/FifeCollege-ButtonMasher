@@ -24,8 +24,30 @@ int main()
 
 	// Create music
 	sf::Music gameMusic;
-	gameMusic.openFromFile / ("audio.music.ogg");
+	gameMusic.openFromFile ("audio/music.ogg");
 	gameMusic.play();
+
+	// Create font
+	sf::Font gameFont;
+	gameFont.loadFromFile("fonts/mainfont.ttf");
+
+	// Create Title
+	sf::Text titleText;
+	titleText.setFont(gameFont);
+	titleText.setString("Button Masher!");
+	titleText.setCharacterSize(100);
+	titleText.setFillColor(sf::Color::Red);
+	titleText.setStyle(sf::Text::Bold | sf::Text::Italic);
+	titleText.setPosition(gameWindow.getSize().x / 2 - titleText.getLocalBounds().width / 2, 30);
+
+	sf::Text authorText;
+	authorText.setFont(gameFont);
+	authorText.setString("By Ryan Mowatt!");
+	authorText.setCharacterSize(100);
+	authorText.setFillColor(sf::Color::Red);
+	authorText.setStyle(sf::Text::Bold | sf::Text::Italic);
+	authorText.setPosition(gameWindow.getSize().x / 2 - authorText.getLocalBounds().width / 2, 100);
+
 
 
 	//Centre the sprite on screen
@@ -62,6 +84,8 @@ int main()
 
 		//Draw everything
 		gameWindow.draw(buttonSprite);
+		gameWindow.draw(titleText);
+		gameWindow.draw(authorText);
 
 		//Display the window contents on the screen
 		gameWindow.display();
