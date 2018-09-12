@@ -88,6 +88,12 @@ int main()
 	sf::Sound clickSound;
 	clickSound.setBuffer(clickBuffer);
 
+	//Game over effect
+	sf::SoundBuffer gameoverBuffer;
+	gameoverBuffer.loadFromFile("audio/gameover.ogg");
+	sf::Sound gameoverSound;
+	gameoverSound.setBuffer(gameoverBuffer);
+
 	//Game state
 	bool playing = false;
 	//Centre the sprite on screen
@@ -154,6 +160,7 @@ int main()
 				timeRemaining = sf::seconds(0.0f);
 				playing = false;
 				promptText.setString("Your score was "+ std::to_string(score) + "! Click the button to start again");
+				gameoverSound.play();
 			}
 		}
 		
