@@ -132,7 +132,17 @@ int main()
 
 		// Update game state
 		sf::Time frameTime = gameClock.restart();
-		timeRemaining = timeRemaining - frameTime;
+		if (playing == true)
+		{
+			timeRemaining = timeRemaining - frameTime;
+
+			if (timeRemaining.asSeconds() <= 0.0f)
+			{
+				timeRemaining = sf::seconds(0.0f);
+				playing = false;
+			}
+		}
+		
 		timerText.setString("Time remaining: " + std::to_string((int)std::ceilf(timeRemaining.asSeconds())));
 
 		scoreText.setString("Score : " + std::to_string(score));
