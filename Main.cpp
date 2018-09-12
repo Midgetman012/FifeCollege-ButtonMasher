@@ -60,6 +60,28 @@ int main()
 	scoreText.setFillColor(sf::Color::Red);
 	scoreText.setPosition(30, 30);
 
+	// timer text
+	sf::Text timerText;
+	timerText.setFont(gameFont);
+	timerText.setString("Time remaining: 0 ");
+	timerText.setCharacterSize(16.0f);
+	timerText.setFillColor(sf::Color::Red);
+	timerText.setPosition(gameWindow.getSize().x - timerText.getLocalBounds().width - 30, 30);
+
+	// Timer functionality
+	sf::Time TimeLimit = sf::seconds(10.0f);
+	sf::Time timeRemaining = TimeLimit;
+	sf::Clock gameClock;
+
+
+	//click sound effect
+	sf::SoundBuffer clickBuffer;
+	clickBuffer.loadFromFile("audio/buttonclick.ogg");
+	sf::Sound clickSound;
+	clickSound.setBuffer(clickBuffer);
+
+	//Game state
+	bool playing = false;
 	//Centre the sprite on screen
 
 	buttonSprite.setPosition(
@@ -78,6 +100,28 @@ int main()
 		{
 			// Process events
 
+			// Check if the event is a mouse button pressed event
+			if (gameEvent.type == sf::Event::MouseButtonPressed)
+			{
+				if (buttonSprite.getGlobalBounds().contains(gameEvent.mouseButton.x, gameEvent.mouseButton.y))
+				{
+					// We clicked the button woop woop
+					//Is the game playing
+					if (playing == true)
+					{
+						//yes
+						score = score + 1;
+					}
+					else
+					{
+						//naw
+						playing = true;
+					}
+					//Click button sound effect
+					clickSound.play();
+				}
+			}
+
 			// Check if the event is the closed event
 			if (gameEvent.type == sf::Event::Closed)
 			{
@@ -86,9 +130,13 @@ int main()
 			}
 		}
 
-		// TODO: Update game state
+		// Update game state
+		sf::Time frameTime = gameClock.restart();
+		timeRemaining = timeRemaining - frameTime;
+		timerText.setString("Time remaining: " + std::to_string((int)std::ceilf(timeRemaining.asSeconds())));
 
-		// TODO: Draw graphics
+		scoreText.setString("Score : " + std::to_string(score));
+
 		//Clear the window to a specific colour
 		gameWindow.clear(sf::Color::Black);
 
@@ -97,6 +145,7 @@ int main()
 		gameWindow.draw(titleText);
 		gameWindow.draw(authorText);
 		gameWindow.draw(scoreText);
+		gameWindow.draw(timerText);
 
 		//Display the window contents on the screen
 		gameWindow.display();
