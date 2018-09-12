@@ -49,6 +49,14 @@ int main()
 	authorText.setStyle(sf::Text::Bold | sf::Text::Italic);
 	authorText.setPosition(gameWindow.getSize().x / 2 - authorText.getLocalBounds().width / 2, 100);
 
+	sf::Text promptText;
+	promptText.setFont(gameFont);
+	promptText.setString("Click the button (obviously)");
+	promptText.setCharacterSize(20);
+	promptText.setFillColor(sf::Color::Red);
+	promptText.setStyle(sf::Text::Italic);
+	promptText.setPosition(gameWindow.getSize().x / 2 - promptText.getLocalBounds().width / 2, 250);
+
 	// Score
 	int score = 0;
 
@@ -116,6 +124,11 @@ int main()
 					{
 						//naw
 						playing = true;
+
+						//reset game data
+						score = 0;
+						timeRemaining = TimeLimit;
+						promptText.setString("Click the button (duhh)");
 					}
 					//Click button sound effect
 					clickSound.play();
@@ -140,6 +153,7 @@ int main()
 			{
 				timeRemaining = sf::seconds(0.0f);
 				playing = false;
+				promptText.setString("Your score was "+ std::to_string(score) + "! Click the button to start again");
 			}
 		}
 		
@@ -156,6 +170,7 @@ int main()
 		gameWindow.draw(authorText);
 		gameWindow.draw(scoreText);
 		gameWindow.draw(timerText);
+		gameWindow.draw(promptText);
 
 		//Display the window contents on the screen
 		gameWindow.display();
